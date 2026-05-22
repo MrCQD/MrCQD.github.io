@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Холодная война на кухонном столе</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F2E6D0;
+    --bg-light: #F8F1E4;
+    --ussr-dark: #8B1E1E;
+    --ussr-mid: #5F1515;
+    --ussr-cream: #E8D2A6;
+    --usa-dark: #1E3A5F;
+    --usa-mid: #315C87;
+    --usa-red: #B63A2E;
+    --text: #1E1E1E;
+    --text-muted: #5B5147;
+    --border: #C8B89A;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘PT Sans’, sans-serif;
+overflow-x: hidden;
+}
+
+/* NOISE TEXTURE OVERLAY */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 1000;
+opacity: 0.4;
+}
+
+/* PROGRESS BAR */
+.progress-nav {
+position: fixed;
+right: 20px;
+top: 50%;
+transform: translateY(-50%);
+z-index: 900;
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+.progress-nav a {
+display: flex;
+align-items: center;
+gap: 8px;
+text-decoration: none;
+opacity: 0.4;
+transition: opacity 0.3s;
+flex-direction: row-reverse;
+}
+.progress-nav a:hover, .progress-nav a.active { opacity: 1; }
+.progress-nav .dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+background: var(–text-muted);
+border: 2px solid var(–text-muted);
+transition: all 0.3s;
+}
+.progress-nav a.active .dot {
+background: var(–ussr-dark);
+border-color: var(–ussr-dark);
+width: 10px; height: 10px;
+}
+.progress-nav .label {
+font-family: ‘PT Serif’, serif;
+font-size: 10px;
+color: var(–text-muted);
+white-space: nowrap;
+display: none;
+}
+.progress-nav a:hover .label { display: block; }
+
+/* SECTIONS */
+section {
+min-height: 100vh;
+position: relative;
+overflow: hidden;
+}
+
+.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 40px;
+}
+
+/* SECTION LABELS */
+.section-label {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 11px;
+letter-spacing: 4px;
+color: var(–text-muted);
+margin-bottom: 12px;
+display: block;
+}
+
+.section-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(42px, 6vw, 80px);
+line-height: 0.95;
+color: var(–text);
+margin-bottom: 16px;
+}
+
+.section-sub {
+font-family: ‘PT Serif’, serif;
+font-size: 17px;
+color: var(–text-muted);
+max-width: 600px;
+line-height: 1.6;
+margin-bottom: 60px;
+}
+
+/* ============================
+SCREEN 1: HERO
+============================ */
+#hero {
+background: var(–bg);
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 80px 0 40px;
+}
+
+.hero-inner {
+display: grid;
+grid-template-columns: 1fr auto 1fr;
+gap: 0;
+align-items: stretch;
+min-height: 75vh;
+}
+
+.hero-side {
+padding: 40px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+position: relative;
+cursor: pointer;
+transition: all 0.4s;
+}
+
+.hero-side.ussr {
+background: var(–ussr-dark);
+color: var(–ussr-cream);
+}
+.hero-side.usa {
+background: var(–usa-dark);
+color: #E8EEF5;
+}
+
+.hero-side:hover { filter: brightness(1.1); }
+
+.hero-side-label {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 13px;
+letter-spacing: 6px;
+opacity: 0.6;
+margin-bottom: 20px;
+}
+
+.hero-items {
+display: flex;
+flex-direction: column;
+gap: 14px;
+}
+
+.hero-item {
+display: flex;
+align-items: center;
+gap: 14px;
+font-family: ‘PT Serif’, serif;
+font-size: 15px;
+opacity: 0.85;
+}
+
+.hero-item .icon { font-size: 22px; }
+
+.hero-tooltip {
+position: absolute;
+bottom: 20px;
+left: 50%;
+transform: translateX(-50%);
+background: rgba(0,0,0,0.85);
+color: #fff;
+font-size: 13px;
+padding: 10px 16px;
+border-radius: 4px;
+white-space: nowrap;
+opacity: 0;
+transition: opacity 0.3s;
+pointer-events: none;
+font-family: ‘PT Serif’, serif;
+max-width: 280px;
+white-space: normal;
+text-align: center;
+z-index: 10;
+}
+.hero-side:hover .hero-tooltip { opacity: 1; }
+
+.hero-center {
+width: 380px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background: var(–bg-light);
+padding: 40px 30px;
+text-align: center;
+border-left: 1px solid var(–border);
+border-right: 1px solid var(–border);
+position: relative;
+z-index: 2;
+}
+
+.hero-year {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 13px;
+letter-spacing: 5px;
+color: var(–text-muted);
+margin-bottom: 20px;
+}
+
+.hero-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(52px, 6vw, 82px);
+line-height: 0.9;
+color: var(–text);
+margin-bottom: 20px;
+}
+
+.hero-title span.red { color: var(–ussr-dark); }
+.hero-title span.blue { color: var(–usa-dark); }
+
+.hero-subtitle {
+font-family: ‘PT Serif’, serif;
+font-size: 14px;
+color: var(–text-muted);
+line-height: 1.6;
+margin-bottom: 30px;
+}
+
+.hero-divider {
+width: 40px;
+height: 2px;
+background: var(–border);
+margin: 20px auto;
+}
+
+.btn-start {
+display: inline-block;
+background: var(–text);
+color: var(–bg);
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 15px;
+letter-spacing: 3px;
+padding: 14px 30px;
+text-decoration: none;
+cursor: pointer;
+border: none;
+transition: all 0.3s;
+margin-top: 10px;
+}
+.btn-start:hover { background: var(–ussr-dark); }
+
+/* ============================
+SCREEN 2: TWO SYSTEMS
+============================ */
+#systems {
+background: var(–bg-light);
+padding: 100px 0;
+}
+
+.systems-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 2px;
+margin-bottom: 40px;
+}
+
+.system-card {
+padding: 50px 40px;
+position: relative;
+}
+
+.system-card.ussr {
+background: var(–ussr-dark);
+color: var(–ussr-cream);
+}
+
+.system-card.usa {
+background: var(–usa-dark);
+color: #E8EEF5;
+}
+
+.system-card-tag {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 11px;
+letter-spacing: 5px;
+opacity: 0.5;
+margin-bottom: 12px;
+}
+
+.system-card-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 52px;
+line-height: 0.9;
+margin-bottom: 8px;
+}
+
+.system-card-subtitle {
+font-family: ‘PT Serif’, serif;
+font-size: 18px;
+font-style: italic;
+opacity: 0.7;
+margin-bottom: 30px;
+}
+
+.system-card-text {
+font-size: 15px;
+line-height: 1.7;
+opacity: 0.85;
+margin-bottom: 30px;
+}
+
+.system-keywords {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+}
+
+.keyword {
+border: 1px solid currentColor;
+padding: 4px 12px;
+font-size: 11px;
+font-family: ‘Bebas Neue’, sans-serif;
+letter-spacing: 2px;
+opacity: 0.6;
+transition: opacity 0.2s;
+}
+.keyword:hover { opacity: 1; }
+
+.system-icons {
+font-size: 28px;
+margin-bottom: 24px;
+display: flex;
+gap: 12px;
+}
+
+/* TOGGLE */
+.compare-toggle {
+display: flex;
+justify-content: center;
+gap: 0;
+margin-bottom: 30px;
+}
+
+.toggle-btn {
+background: none;
+border: 2px solid var(–text);
+padding: 10px 28px;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 14px;
+letter-spacing: 2px;
+cursor: pointer;
+color: var(–text);
+transition: all 0.3s;
+}
+
+.toggle-btn.active, .toggle-btn:hover {
+background: var(–text);
+color: var(–bg);
+}
+
+.compare-result {
+background: var(–bg);
+border: 1px solid var(–border);
+padding: 30px 40px;
+}
+
+.compare-result h3 {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 22px;
+letter-spacing: 2px;
+margin-bottom: 20px;
+color: var(–text-muted);
+}
+
+.compare-points {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+}
+
+.compare-point {
+display: flex;
+gap: 12px;
+font-size: 14px;
+line-height: 1.5;
+font-family: ‘PT Serif’, serif;
+color: var(–text-muted);
+padding: 12px;
+border-left: 3px solid var(–border);
+}
+.compare-point.ussr-p { border-color: var(–ussr-dark); }
+.compare-point.usa-p { border-color: var(–usa-mid); }
+.compare-point.shared { border-color: var(–border); grid-column: span 2; }
+
+/* ============================
+SCREEN 3: STATS
+============================ */
+#stats {
+background: var(–bg);
+padding: 100px 0;
+}
+
+.product-buttons {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+margin-bottom: 50px;
+}
+
+.prod-btn {
+background: none;
+border: 2px solid var(–border);
+padding: 10px 20px;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 14px;
+letter-spacing: 2px;
+cursor: pointer;
+color: var(–text-muted);
+transition: all 0.3s;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.prod-btn:hover { border-color: var(–text); color: var(–text); }
+.prod-btn.active { background: var(–text); color: var(–bg); border-color: var(–text); }
+
+.stats-visual {
+display: grid;
+grid-template-columns: 1fr 200px 1fr;
+gap: 20px;
+align-items: end;
+min-height: 300px;
+margin-bottom: 40px;
+}
+
+.stat-side {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 16px;
+}
+
+.stat-bar-wrap {
+width: 100%;
+display: flex;
+align-items: flex-end;
+justify-content: center;
+height: 240px;
+}
+
+.stat-bar {
+width: 80px;
+border-radius: 2px 2px 0 0;
+transition: height 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+position: relative;
+cursor: pointer;
+}
+
+.stat-bar.ussr-bar {
+background: linear-gradient(to top, var(–ussr-mid), var(–ussr-dark));
+}
+
+.stat-bar.usa-bar {
+background: linear-gradient(to top, #1E3A5F, #315C87);
+}
+
+.stat-bar-tooltip {
+position: absolute;
+top: -50px;
+left: 50%;
+transform: translateX(-50%);
+background: var(–text);
+color: var(–bg);
+padding: 6px 12px;
+font-size: 13px;
+font-family: ‘PT Serif’, serif;
+white-space: nowrap;
+opacity: 0;
+transition: opacity 0.2s;
+pointer-events: none;
+border-radius: 2px;
+}
+.stat-bar:hover .stat-bar-tooltip { opacity: 1; }
+
+.stat-value {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 36px;
+letter-spacing: 2px;
+}
+
+.stat-value.ussr-v { color: var(–ussr-dark); }
+.stat-value.usa-v { color: var(–usa-dark); }
+
+.stat-label-s {
+font-family: ‘PT Serif’, serif;
+font-size: 13px;
+color: var(–text-muted);
+text-align: center;
+}
+
+.stat-center-label {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-end;
+padding-bottom: 20px;
+gap: 8px;
+}
+
+.stat-product-icon { font-size: 50px; }
+
+.stat-product-name {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 20px;
+letter-spacing: 3px;
+color: var(–text-muted);
+text-align: center;
+}
+
+.stat-unit {
+font-size: 11px;
+color: var(–text-muted);
+font-family: ‘PT Serif’, serif;
+}
+
+.stat-comment {
+background: var(–bg-light);
+border: 1px solid var(–border);
+border-left: 4px solid var(–text-muted);
+padding: 20px 24px;
+font-family: ‘PT Serif’, serif;
+font-size: 15px;
+color: var(–text-muted);
+line-height: 1.6;
+font-style: italic;
+}
+
+/* ============================
+SCREEN 4: DAILY MENU
+============================ */
+#daily {
+background: var(–bg-light);
+padding: 100px 0;
+}
+
+.meal-toggle {
+display: flex;
+gap: 0;
+margin-bottom: 50px;
+border: 2px solid var(–border);
+width: fit-content;
+}
+
+.meal-btn {
+background: none;
+border: none;
+padding: 12px 32px;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 15px;
+letter-spacing: 3px;
+cursor: pointer;
+color: var(–text-muted);
+transition: all 0.3s;
+border-right: 1px solid var(–border);
+}
+.meal-btn:last-child { border-right: none; }
+.meal-btn.active, .meal-btn:hover {
+background: var(–text);
+color: var(–bg);
+}
+
+.meal-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 2px;
+margin-bottom: 30px;
+}
+
+.meal-card {
+padding: 40px;
+}
+
+.meal-card.ussr { background: var(–ussr-dark); color: var(–ussr-cream); }
+.meal-card.usa { background: var(–usa-dark); color: #E8EEF5; }
+
+.meal-card-tag {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 11px;
+letter-spacing: 5px;
+opacity: 0.5;
+margin-bottom: 8px;
+}
+
+.meal-dishes {
+display: flex;
+flex-direction: column;
+gap: 14px;
+margin-bottom: 24px;
+}
+
+.meal-dish {
+display: flex;
+align-items: flex-start;
+gap: 14px;
+font-family: ‘PT Serif’, serif;
+font-size: 16px;
+opacity: 0.9;
+padding-bottom: 14px;
+border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.meal-dish:last-child { border-bottom: none; }
+.meal-dish .dish-icon { font-size: 24px; min-width: 32px; }
+
+.meal-card-comment {
+font-size: 13px;
+font-family: ‘PT Serif’, serif;
+font-style: italic;
+opacity: 0.6;
+padding-top: 16px;
+border-top: 1px solid rgba(255,255,255,0.15);
+line-height: 1.5;
+}
+
+.meal-analysis {
+background: var(–bg);
+border: 1px solid var(–border);
+border-left: 4px solid var(–text-muted);
+padding: 20px 28px;
+font-family: ‘PT Serif’, serif;
+font-size: 15px;
+color: var(–text-muted);
+line-height: 1.6;
+font-style: italic;
+}
+
+/* ============================
+SCREEN 5: HOUSEWIFE
+============================ */
+#housewife {
+background: var(–bg);
+padding: 100px 0;
+}
+
+.hw-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 40px;
+margin-bottom: 40px;
+}
+
+.hw-side-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 28px;
+letter-spacing: 2px;
+margin-bottom: 8px;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.hw-side-title.ussr-t { color: var(–ussr-dark); }
+.hw-side-title.usa-t { color: var(–usa-dark); }
+
+.hw-subtitle {
+font-family: ‘PT Serif’, serif;
+font-size: 15px;
+font-style: italic;
+color: var(–text-muted);
+margin-bottom: 24px;
+}
+
+.hw-cards { display: flex; flex-direction: column; gap: 8px; }
+
+.hw-card {
+border: 1px solid var(–border);
+overflow: hidden;
+cursor: pointer;
+}
+
+.hw-card-header {
+padding: 16px 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+transition: background 0.3s;
+}
+
+.hw-card.ussr-hw .hw-card-header { background: #f5e8e8; }
+.hw-card.usa-hw .hw-card-header { background: #e8eef5; }
+.hw-card.ussr-hw:hover .hw-card-header { background: #edd5d5; }
+.hw-card.usa-hw:hover .hw-card-header { background: #d5e0ed; }
+
+.hw-card-name {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 16px;
+letter-spacing: 2px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.hw-card-arrow {
+font-size: 12px;
+transition: transform 0.3s;
+color: var(–text-muted);
+}
+.hw-card.open .hw-card-arrow { transform: rotate(180deg); }
+
+.hw-card-body {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.4s ease;
+background: var(–bg-light);
+}
+.hw-card.open .hw-card-body { max-height: 200px; }
+
+.hw-card-text {
+padding: 16px 20px;
+font-family: ‘PT Serif’, serif;
+font-size: 14px;
+color: var(–text-muted);
+line-height: 1.6;
+}
+
+.hw-conclusion {
+background: var(–text);
+color: var(–bg);
+padding: 30px 40px;
+font-family: ‘PT Serif’, serif;
+font-size: 16px;
+line-height: 1.7;
+}
+
+.hw-conclusion strong {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 20px;
+letter-spacing: 2px;
+display: block;
+margin-bottom: 8px;
+}
+
+/* ============================
+SCREEN 6: IDEOLOGY SLIDER
+============================ */
+#ideology {
+background: var(–bg-light);
+padding: 100px 0;
+}
+
+.ideology-inner {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 0;
+margin-bottom: 40px;
+min-height: 300px;
+}
+
+.ideology-panel {
+padding: 40px;
+transition: opacity 0.5s;
+}
+
+.ideology-panel.ussr-panel { background: var(–ussr-dark); color: var(–ussr-cream); }
+.ideology-panel.usa-panel { background: var(–usa-dark); color: #E8EEF5; }
+
+.ideology-panel-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 36px;
+margin-bottom: 8px;
+}
+
+.ideology-panel-sub {
+font-family: ‘PT Serif’, serif;
+font-size: 14px;
+font-style: italic;
+opacity: 0.6;
+margin-bottom: 24px;
+}
+
+.ideology-tags {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+
+.ideology-tag {
+padding: 8px 16px;
+border: 1px solid currentColor;
+font-family: ‘PT Serif’, serif;
+font-size: 13px;
+opacity: 0.7;
+transition: opacity 0.2s;
+}
+
+.ideology-slider-section {
+padding: 40px 0;
+}
+
+.slider-labels {
+display: flex;
+justify-content: space-between;
+margin-bottom: 12px;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 14px;
+letter-spacing: 3px;
+color: var(–text-muted);
+}
+
+.slider-labels span:first-child { color: var(–ussr-dark); }
+.slider-labels span:last-child { color: var(–usa-dark); }
+
+#ideologySlider {
+-webkit-appearance: none;
+width: 100%;
+height: 4px;
+background: linear-gradient(to right, var(–ussr-dark), #8a8a6a, var(–usa-dark));
+outline: none;
+cursor: pointer;
+margin-bottom: 12px;
+}
+
+#ideologySlider::-webkit-slider-thumb {
+-webkit-appearance: none;
+width: 24px;
+height: 24px;
+border-radius: 50%;
+background: var(–bg);
+border: 3px solid var(–text);
+cursor: pointer;
+transition: transform 0.2s;
+}
+
+#ideologySlider::-webkit-slider-thumb:hover { transform: scale(1.3); }
+
+.slider-center-label {
+text-align: center;
+font-family: ‘PT Serif’, serif;
+font-size: 13px;
+color: var(–text-muted);
+font-style: italic;
+margin-bottom: 30px;
+}
+
+.ideology-explanation {
+background: var(–bg);
+border: 1px solid var(–border);
+padding: 28px 34px;
+font-family: ‘PT Serif’, serif;
+font-size: 15px;
+line-height: 1.7;
+color: var(–text-muted);
+transition: all 0.4s;
+font-style: italic;
+border-left: 4px solid var(–border);
+}
+.ideology-explanation.ussr-exp { border-left-color: var(–ussr-dark); }
+.ideology-explanation.usa-exp { border-left-color: var(–usa-mid); }
+.ideology-explanation.balance-exp { border-left-color: var(–text-muted); }
+
+/* ============================
+SCREEN 7: CULTURE
+============================ */
+#culture {
+background: var(–bg);
+padding: 100px 0;
+}
+
+.culture-filter {
+display: flex;
+gap: 8px;
+margin-bottom: 40px;
+}
+
+.filter-btn {
+background: none;
+border: 2px solid var(–border);
+padding: 8px 22px;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 13px;
+letter-spacing: 2px;
+cursor: pointer;
+color: var(–text-muted);
+transition: all 0.3s;
+}
+.filter-btn.active, .filter-btn:hover {
+border-color: var(–text);
+color: var(–text);
+background: var(–text);
+color: var(–bg);
+}
+
+.culture-cards {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 2px;
+}
+
+.culture-card {
+cursor: pointer;
+overflow: hidden;
+position: relative;
+transition: transform 0.3s;
+}
+
+.culture-card:hover { transform: translateY(-4px); }
+
+.culture-card-inner {
+padding: 32px 28px;
+height: 100%;
+display: flex;
+flex-direction: column;
+}
+
+.culture-card.ussr-c .culture-card-inner { background: #f0e4e4; }
+.culture-card.usa-c .culture-card-inner { background: #e0e8f0; }
+
+.culture-card-badge {
+display: inline-block;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 10px;
+letter-spacing: 3px;
+padding: 3px 10px;
+margin-bottom: 16px;
+width: fit-content;
+}
+
+.ussr-c .culture-card-badge { background: var(–ussr-dark); color: var(–ussr-cream); }
+.usa-c .culture-card-badge { background: var(–usa-dark); color: #E8EEF5; }
+
+.culture-card-icon { font-size: 36px; margin-bottom: 12px; }
+
+.culture-card-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 24px;
+letter-spacing: 1px;
+margin-bottom: 10px;
+color: var(–text);
+}
+
+.culture-card-desc {
+font-family: ‘PT Serif’, serif;
+font-size: 13px;
+color: var(–text-muted);
+line-height: 1.5;
+font-style: italic;
+flex-grow: 1;
+}
+
+.culture-card-cta {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 11px;
+letter-spacing: 3px;
+color: var(–text-muted);
+margin-top: 16px;
+opacity: 0.6;
+}
+
+/* MODAL */
+.modal-overlay {
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.7);
+z-index: 9000;
+display: flex;
+align-items: center;
+justify-content: center;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.3s;
+padding: 20px;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+background: var(–bg-light);
+max-width: 600px;
+width: 100%;
+padding: 50px;
+position: relative;
+transform: translateY(20px);
+transition: transform 0.3s;
+max-height: 85vh;
+overflow-y: auto;
+}
+.modal-overlay.open .modal { transform: none; }
+
+.modal-close {
+position: absolute;
+top: 20px;
+right: 20px;
+background: none;
+border: none;
+font-size: 24px;
+cursor: pointer;
+color: var(–text-muted);
+line-height: 1;
+}
+
+.modal-badge {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 11px;
+letter-spacing: 4px;
+color: var(–text-muted);
+margin-bottom: 16px;
+}
+
+.modal-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 46px;
+line-height: 0.95;
+margin-bottom: 30px;
+}
+
+.modal-section {
+margin-bottom: 20px;
+}
+
+.modal-section-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 13px;
+letter-spacing: 3px;
+color: var(–text-muted);
+margin-bottom: 8px;
+}
+
+.modal-section-text {
+font-family: ‘PT Serif’, serif;
+font-size: 15px;
+line-height: 1.6;
+color: var(–text);
+}
+
+/* ============================
+SCREEN 8: CONCLUSION
+============================ */
+#conclusion {
+background: var(–text);
+color: var(–bg);
+padding: 100px 0;
+}
+
+.conclusion-label {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 11px;
+letter-spacing: 4px;
+color: var(–border);
+margin-bottom: 12px;
+display: block;
+}
+
+.conclusion-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(52px, 7vw, 90px);
+line-height: 0.9;
+margin-bottom: 60px;
+color: var(–bg);
+}
+
+.conclusion-cards {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 2px;
+margin-bottom: 60px;
+}
+
+.conc-card {
+padding: 40px 32px;
+background: rgba(255,255,255,0.04);
+border-top: 3px solid var(–border);
+transition: background 0.3s;
+}
+.conc-card:hover { background: rgba(255,255,255,0.08); }
+
+.conc-card:first-child { border-top-color: var(–ussr-dark); }
+.conc-card:nth-child(2) { border-top-color: var(–usa-mid); }
+.conc-card:last-child { border-top-color: var(–border); }
+
+.conc-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 60px;
+opacity: 0.1;
+line-height: 1;
+margin-bottom: -10px;
+}
+
+.conc-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 26px;
+letter-spacing: 1px;
+margin-bottom: 16px;
+color: var(–bg-light);
+}
+
+.conc-text {
+font-family: ‘PT Serif’, serif;
+font-size: 14px;
+color: var(–border);
+line-height: 1.7;
+}
+
+.final-phrase {
+border-top: 1px solid rgba(255,255,255,0.1);
+padding-top: 50px;
+margin-bottom: 60px;
+}
+
+.final-phrase p {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(28px, 4vw, 50px);
+line-height: 1.1;
+color: var(–bg-light);
+}
+
+.final-phrase p span.red { color: var(–ussr-dark); }
+.final-phrase p span.blue { color: var(–usa-mid); }
+
+/* SOURCES */
+.sources-section {
+border-top: 1px solid rgba(255,255,255,0.1);
+padding-top: 50px;
+}
+
+.sources-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 22px;
+letter-spacing: 3px;
+color: var(–border);
+margin-bottom: 20px;
+}
+
+.sources-accordion { display: flex; flex-direction: column; gap: 1px; }
+
+.source-group {
+border-top: 1px solid rgba(255,255,255,0.1);
+overflow: hidden;
+}
+
+.source-group-header {
+padding: 14px 0;
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 13px;
+letter-spacing: 3px;
+color: var(–border);
+transition: color 0.2s;
+}
+.source-group-header:hover { color: var(–bg); }
+
+.source-group-body {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.4s ease;
+}
+.source-group.open .source-group-body { max-height: 300px; }
+
+.source-list {
+padding: 10px 0 20px;
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.source-item {
+font-family: ‘PT Serif’, serif;
+font-size: 13px;
+color: rgba(242,230,208,0.5);
+line-height: 1.4;
+padding-left: 16px;
+border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+/* SCROLL ANIMATIONS */
+.reveal {
+opacity: 0;
+transform: translateY(30px);
+transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+opacity: 1;
+transform: none;
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* HIDDEN */
+.hidden { display: none !important; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+.hero-inner { grid-template-columns: 1fr; }
+.hero-center { width: 100%; border: none; border-top: 1px solid var(–border); border-bottom: 1px solid var(–border); }
+.systems-grid, .compare-points, .meal-grid, .hw-grid,
+.ideology-inner, .culture-cards, .conclusion-cards { grid-template-columns: 1fr; }
+.stats-visual { grid-template-columns: 1fr; }
+.progress-nav { display: none; }
+.container { padding: 0 20px; }
+.hero-side { padding: 30px; }
+.hero-center { padding: 40px 20px; }
+.shared { grid-column: span 1 !important; }
+.modal { padding: 30px; }
+.product-buttons { gap: 6px; }
+.prod-btn { padding: 8px 12px; font-size: 12px; }
+}
+
+@media (max-width: 600px) {
+.stat-bar-wrap { height: 160px; }
+.final-phrase p { font-size: 26px; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- PROGRESS NAV -->
+
+<nav class="progress-nav" id="progressNav">
+  <a href="#hero" class="active"><span class="dot"></span><span class="label">01 Обложка</span></a>
+  <a href="#systems"><span class="dot"></span><span class="label">02 Системы</span></a>
+  <a href="#stats"><span class="dot"></span><span class="label">03 Статистика</span></a>
+  <a href="#daily"><span class="dot"></span><span class="label">04 День</span></a>
+  <a href="#housewife"><span class="dot"></span><span class="label">05 Быт</span></a>
+  <a href="#ideology"><span class="dot"></span><span class="label">06 Идеология</span></a>
+  <a href="#culture"><span class="dot"></span><span class="label">07 Культура</span></a>
+  <a href="#conclusion"><span class="dot"></span><span class="label">08 Вывод</span></a>
+</nav>
+
+<!-- MODAL -->
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div class="modal-badge" id="modalBadge"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-section">
+      <div class="modal-section-title">ЧТО ПОКАЗЫВАЕТ</div>
+      <div class="modal-section-text" id="modalWhat"></div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">ПОЧЕМУ ВАЖНО</div>
+      <div class="modal-section-text" id="modalWhy"></div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">СВЯЗЬ С ТЕМОЙ</div>
+      <div class="modal-section-text" id="modalLink"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+     SCREEN 1: HERO
+     ============================== -->
+
+<section id="hero">
+  <div class="hero-inner container" style="max-width:100%;padding:0;">
+    <div class="hero-side ussr" onmouseenter="" onmouseleave="">
+      <div class="hero-side-label">СССР · 1960–1980</div>
+      <div class="hero-items">
+        <div class="hero-item"><span class="icon">🍞</span> Чёрный хлеб</div>
+        <div class="hero-item"><span class="icon">🥔</span> Картофель</div>
+        <div class="hero-item"><span class="icon">🫙</span> Банка с соленьями</div>
+        <div class="hero-item"><span class="icon">🫖</span> Стакан чая</div>
+        <div class="hero-item"><span class="icon">👜</span> Авоська</div>
+        <div class="hero-item"><span class="icon">📖</span> Кулинарная книга</div>
+        <div class="hero-item"><span class="icon">🍲</span> Борщ</div>
+        <div class="hero-item"><span class="icon">🥟</span> Пельмени</div>
+      </div>
+      <div class="hero-tooltip">СССР: дефицит, домашняя готовка, хлеб, картофель, государственное регулирование</div>
+    </div>
+    <div class="hero-center">
+      <div class="hero-year">1960 — 1980</div>
+      <div class="hero-title">
+        <span class="red">ХОЛОДНАЯ</span><br>
+        ВОЙНА<br>
+        <span class="blue">НА КУХОННОМ</span><br>
+        СТОЛЕ
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-subtitle">
+        Как СССР и США соревновались не только в космосе и оружии, но и в том, что лежало на тарелке обычного человека
+      </div>
+      <button class="btn-start" onclick="document.getElementById('systems').scrollIntoView({behavior:'smooth'})">
+        Начать сравнение ↓
+      </button>
+    </div>
+    <div class="hero-side usa">
+      <div class="hero-side-label">США · 1960–1980</div>
+      <div class="hero-items">
+        <div class="hero-item"><span class="icon">🥣</span> Хлопья с молоком</div>
+        <div class="hero-item"><span class="icon">🍔</span> Гамбургер</div>
+        <div class="hero-item"><span class="icon">🥤</span> Coca-Cola</div>
+        <div class="hero-item"><span class="icon">🍊</span> Апельсиновый сок</div>
+        <div class="hero-item"><span class="icon">📺</span> TV-dinner</div>
+        <div class="hero-item"><span class="icon">🛒</span> Супермаркет</div>
+        <div class="hero-item"><span class="icon">🥧</span> Apple Pie</div>
+        <div class="hero-item"><span class="icon">📣</span> Реклама брендов</div>
+      </div>
+      <div class="hero-tooltip">США: супермаркеты, бренды, полуфабрикаты, реклама, культура выбора</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     SCREEN 2: TWO SYSTEMS
+     ============================== -->
+
+<section id="systems">
+  <div class="container" style="padding-top:100px;padding-bottom:100px;">
+    <span class="section-label reveal">02 — СИСТЕМЫ ПИТАНИЯ</span>
+    <h2 class="section-title reveal">Две кухни —<br>две системы</h2>
+    <p class="section-sub reveal">Рацион человека зависел не только от вкуса, но и от устройства государства, рынка и быта.</p>
+
+```
+<div class="systems-grid reveal">
+  <div class="system-card ussr">
+    <div class="system-card-tag">СССР</div>
+    <div class="system-card-title">СССР</div>
+    <div class="system-card-subtitle">Гарантия, но дефицит</div>
+    <div class="system-icons">🍞 🥔 🫙 👜 📖</div>
+    <div class="system-card-text">
+      В СССР питание регулировалось государством: цены на базовые продукты фиксировались, хлеб и молоко воспринимались как социальная гарантия. Но вместе с этим существовали очереди, дефицит и необходимость «доставать» продукты.
+    </div>
+    <div class="system-keywords">
+      <span class="keyword">госрегулирование</span>
+      <span class="keyword">фиксированные цены</span>
+      <span class="keyword">дефицит</span>
+      <span class="keyword">домашняя готовка</span>
+      <span class="keyword">очереди</span>
+    </div>
+  </div>
+  <div class="system-card usa">
+    <div class="system-card-tag">США</div>
+    <div class="system-card-title">США</div>
+    <div class="system-card-subtitle">Выбор, рынок и реклама</div>
+    <div class="system-icons">🛒 📺 🍔 📣 🏪</div>
+    <div class="system-card-text">
+      В США питание формировалось рынком, корпорациями и рекламой. Супермаркеты создавали ощущение широкого выбора, а полуфабрикаты и фастфуд меняли повседневную кухню.
+    </div>
+    <div class="system-keywords">
+      <span class="keyword">рынок</span>
+      <span class="keyword">бренды</span>
+      <span class="keyword">супермаркеты</span>
+      <span class="keyword">реклама</span>
+      <span class="keyword">фастфуд</span>
+      <span class="keyword">полуфабрикаты</span>
+    </div>
+  </div>
+</div>
+
+<div class="compare-toggle reveal">
+  <button class="toggle-btn active" id="diffBtn" onclick="showCompare('diff')">Различия</button>
+  <button class="toggle-btn" id="simBtn" onclick="showCompare('sim')">Сходства</button>
+</div>
+
+<div class="compare-result reveal" id="compareResult">
+  <h3>КЛЮЧЕВЫЕ РАЗЛИЧИЯ</h3>
+  <div class="compare-points" id="comparePoints">
+    <div class="compare-point ussr-p">🏛️ СССР — государственное регулирование цен и распределения продуктов</div>
+    <div class="compare-point usa-p">🏪 США — рыночная экономика и корпоративные продовольственные системы</div>
+    <div class="compare-point ussr-p">📋 СССР — дефицит и очереди, особенно на колбасу и масло</div>
+    <div class="compare-point usa-p">📢 США — реклама и избыток выбора, но неравный доступ по доходу</div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ==============================
+     SCREEN 3: STATS
+     ============================== -->
+
+<section id="stats">
+  <div class="container">
+    <span class="section-label reveal">03 — СТАТИСТИКА</span>
+    <h2 class="section-title reveal">Что ели чаще?</h2>
+    <p class="section-sub reveal">Среднедушевое потребление продуктов в год, 1970-е гг. Нажмите на продукт для сравнения.</p>
+
+```
+<div class="product-buttons reveal" id="productButtons"></div>
+
+<div class="stats-visual reveal" id="statsVisual">
+  <div class="stat-side">
+    <div class="stat-value ussr-v" id="ussrVal">—</div>
+    <div class="stat-label-s">СССР</div>
+    <div class="stat-bar-wrap">
+      <div class="stat-bar ussr-bar" id="ussrBar" style="height:0">
+        <div class="stat-bar-tooltip" id="ussrTooltip"></div>
+      </div>
+    </div>
+  </div>
+  <div class="stat-center-label">
+    <div class="stat-product-icon" id="statIcon">🌾</div>
+    <div class="stat-product-name" id="statName">Выберите продукт</div>
+    <div class="stat-unit" id="statUnit"></div>
+  </div>
+  <div class="stat-side">
+    <div class="stat-value usa-v" id="usaVal">—</div>
+    <div class="stat-label-s">США</div>
+    <div class="stat-bar-wrap">
+      <div class="stat-bar usa-bar" id="usaBar" style="height:0">
+        <div class="stat-bar-tooltip" id="usaTooltip"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stat-comment reveal" id="statComment">
+  Выберите продукт выше, чтобы увидеть сравнение потребления в СССР и США в 1970-е годы.
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ==============================
+     SCREEN 4: DAILY MENU
+     ============================== -->
+
+<section id="daily">
+  <div class="container">
+    <span class="section-label reveal">04 — ТИПИЧНЫЙ ДЕНЬ</span>
+    <h2 class="section-title reveal">Один день<br>на кухне</h2>
+    <p class="section-sub reveal">Как выглядел обычный рабочий день через завтрак, обед и ужин?</p>
+
+```
+<div class="meal-toggle reveal">
+  <button class="meal-btn active" onclick="showMeal('breakfast')">🌅 Завтрак</button>
+  <button class="meal-btn" onclick="showMeal('lunch')">☀️ Обед</button>
+  <button class="meal-btn" onclick="showMeal('dinner')">🌙 Ужин</button>
+</div>
+
+<div class="meal-grid reveal">
+  <div class="meal-card ussr">
+    <div class="meal-card-tag">СССР</div>
+    <div class="meal-dishes" id="ussrDishes"></div>
+    <div class="meal-card-comment" id="ussrMealComment"></div>
+  </div>
+  <div class="meal-card usa">
+    <div class="meal-card-tag">США</div>
+    <div class="meal-dishes" id="usaDishes"></div>
+    <div class="meal-card-comment" id="usaMealComment"></div>
+  </div>
+</div>
+
+<div class="meal-analysis reveal" id="mealAnalysis"></div>
+```
+
+  </div>
+</section>
+
+<!-- ==============================
+     SCREEN 5: HOUSEWIFE
+     ============================== -->
+
+<section id="housewife">
+  <div class="container">
+    <span class="section-label reveal">05 — БЫТ И ДОМОХОЗЯЙКИ</span>
+    <h2 class="section-title reveal">Главная нагрузка<br>кухни</h2>
+    <p class="section-sub reveal">В обеих системах питание было связано с женским домашним трудом, но проблемы были разными.</p>
+
+```
+<div class="hw-grid">
+  <div class="reveal">
+    <div class="hw-side-title ussr-t">🇷🇺 СССР: «Достать и приготовить»</div>
+    <div class="hw-subtitle">Главная проблема — дефицит и трудоёмкость</div>
+    <div class="hw-cards" id="ussrHwCards"></div>
+  </div>
+  <div class="reveal reveal-delay-1">
+    <div class="hw-side-title usa-t">🇺🇸 США: «Выбрать и купить»</div>
+    <div class="hw-subtitle">Главная проблема — избыток выбора и реклама</div>
+    <div class="hw-cards" id="usaHwCards"></div>
+  </div>
+</div>
+
+<div class="hw-conclusion reveal" style="margin-top:40px;">
+  <strong>ВЫВОД</strong>
+  СССР и США создавали разные бытовые проблемы: в СССР нужно было искать продукты, в США — выбирать среди избытка и рекламы. При этом в обеих странах домашний труд оставался преимущественно женским.
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ==============================
+     SCREEN 6: IDEOLOGY
+     ============================== -->
+
+<section id="ideology">
+  <div class="container">
+    <span class="section-label reveal">06 — ИДЕОЛОГИЯ</span>
+    <h2 class="section-title reveal">Еда как идеология</h2>
+    <p class="section-sub reveal">Питание было не только бытовой практикой, но и способом рассказать о преимуществах системы.</p>
+
+```
+<div class="ideology-inner reveal">
+  <div class="ideology-panel ussr-panel" id="ussrPanel">
+    <div class="ideology-panel-title">СССР</div>
+    <div class="ideology-panel-sub">Питание как социальная гарантия</div>
+    <div class="ideology-tags">
+      <div class="ideology-tag">📌 Фиксированные цены на хлеб и молоко</div>
+      <div class="ideology-tag">📌 Официальные кулинарные книги</div>
+      <div class="ideology-tag">📌 Государственное распределение</div>
+      <div class="ideology-tag">📌 Экономное и полезное питание</div>
+      <div class="ideology-tag">📌 Доступность как превосходство</div>
+    </div>
+  </div>
+  <div class="ideology-panel usa-panel" id="usaPanel">
+    <div class="ideology-panel-title">США</div>
+    <div class="ideology-panel-sub">Питание как потребительская свобода</div>
+    <div class="ideology-tags">
+      <div class="ideology-tag">📌 Супермаркеты и изобилие</div>
+      <div class="ideology-tag">📌 Бренды и реклама</div>
+      <div class="ideology-tag">📌 Выбор как признак свободы</div>
+      <div class="ideology-tag">📌 Фастфуд и полуфабрикаты</div>
+      <div class="ideology-tag">📌 Потребительский индивидуализм</div>
+    </div>
+  </div>
+</div>
+
+<div class="ideology-slider-section reveal">
+  <div class="slider-labels">
+    <span>ГАРАНТИЯ (СССР)</span>
+    <span>ВЫБОР (США)</span>
+  </div>
+  <input type="range" id="ideologySlider" min="0" max="100" value="50" oninput="updateIdeology(this.value)">
+  <div class="slider-center-label" id="sliderCenterLabel">Двигайте ползунок для сравнения позиций</div>
+  <div class="ideology-explanation balance-exp" id="ideologyExplanation">
+    Обе стороны использовали питание как аргумент в споре о преимуществах своей системы. США показывали советский дефицит, СССР критиковал бедность и неравенство капиталистического общества.
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ==============================
+     SCREEN 7: CULTURE
+     ============================== -->
+
+<section id="culture">
+  <div class="container">
+    <span class="section-label reveal">07 — МАССОВАЯ КУЛЬТУРА</span>
+    <h2 class="section-title reveal">Кухня в кино,<br>рекламе и памяти</h2>
+    <p class="section-sub reveal">Еда попадала не только на стол, но и в массовую культуру.</p>
+
+```
+<div class="culture-filter reveal">
+  <button class="filter-btn active" onclick="filterCulture('all', this)">Все</button>
+  <button class="filter-btn" onclick="filterCulture('ussr', this)">СССР</button>
+  <button class="filter-btn" onclick="filterCulture('usa', this)">США</button>
+</div>
+
+<div class="culture-cards reveal" id="cultureCards"></div>
+```
+
+  </div>
+</section>
+
+<!-- ==============================
+     SCREEN 8: CONCLUSION
+     ============================== -->
+
+<section id="conclusion">
+  <div class="container">
+    <span class="conclusion-label">08 — ГЛАВНЫЙ ВЫВОД</span>
+    <h2 class="conclusion-title">Что показывает<br>кухонный стол?</h2>
+
+```
+<div class="conclusion-cards">
+  <div class="conc-card">
+    <div class="conc-num">01</div>
+    <div class="conc-title">Рацион отражал систему</div>
+    <div class="conc-text">В СССР структура питания была связана с государственным регулированием, доступностью базовых продуктов и дефицитом. В США — с рынком, рекламой и потребительским выбором.</div>
+  </div>
+  <div class="conc-card">
+    <div class="conc-num">02</div>
+    <div class="conc-title">Повседневность была частью Холодной войны</div>
+    <div class="conc-text">Противостояние двух систем проявлялось не только в дипломатии и военной политике, но и в магазинах, кухонных привычках, рекламе и семейном столе.</div>
+  </div>
+  <div class="conc-card">
+    <div class="conc-num">03</div>
+    <div class="conc-title">У каждой модели были свои проблемы</div>
+    <div class="conc-text">Советская система обеспечивала базовую продовольственную безопасность, но сталкивалась с дефицитом. Американская давала больше выбора, но зависела от рынка, рекламы и дохода.</div>
+  </div>
+</div>
+
+<div class="final-phrase">
+  <p>
+    Холодная война была не только в <span class="red">ракетах</span>.<br>
+    Она была в <span class="red">хлебе</span>, мясе, <span class="red">очередях</span>,<br>
+    <span class="blue">рекламе</span> и семейном <span class="blue">ужине</span>.
+  </p>
+</div>
+
+<div class="sources-section">
+  <div class="sources-title">ИСТОЧНИКИ И МАТЕРИАЛЫ</div>
+  <div class="sources-accordion" id="sourcesAccordion"></div>
+</div>
+```
+
+  </div>
+</section>
+
+<script>
+/* ============================
+   DATA
+   ============================ */
+const products = [
+  { name:'Хлеб', icon:'🍞', ussr:'150–160', usa:'70–80', ussrN:155, usaN:75, unit:'кг/год', comment:'Советский рацион был более углеводным: хлеб оставался дешёвой, сытной и доступной основой питания. В США хлеб уступал место мясным и готовым продуктам.' },
+  { name:'Мясо', icon:'🥩', ussr:'48–55', usa:'110–120', ussrN:52, usaN:115, unit:'кг/год', comment:'Американцы потребляли в 2–2,5 раза больше мяса. Это отражало более высокий уровень потребления и развитую агропромышленную систему США.' },
+  { name:'Молоко', icon:'🥛', ussr:'300–320', usa:'250–260', ussrN:310, usaN:255, unit:'кг/год', comment:'По молочным продуктам разрыв был значительно меньше. СССР производил большое количество кефира, сметаны и творога.' },
+  { name:'Яйца', icon:'🥚', ussr:'220–240', usa:'300–320', ussrN:230, usaN:310, unit:'шт./год', comment:'В США потребление яиц было выше, в том числе благодаря популярности яиц на завтрак и широкому использованию в выпечке.' },
+  { name:'Сахар', icon:'🍬', ussr:'40–45', usa:'55–65', ussrN:42, usaN:60, unit:'кг/год', comment:'Американцы потребляли заметно больше сладкого — сказывалось широкое распространение газировки, кондитерских изделий и сладких хлопьев.' },
+  { name:'Картофель', icon:'🥔', ussr:'120–130', usa:'50–60', ussrN:125, usaN:55, unit:'кг/год', comment:'Картофель был важнейшей частью советского рациона — дешёвый, питательный, доступный круглый год. В США он уступал место другим гарнирам.' },
+  { name:'Фрукты', icon:'🍎', ussr:'35–40', usa:'65–75', ussrN:38, usaN:70, unit:'кг/год', comment:'В США фрукты были доступнее круглый год благодаря развитой торговле. В СССР сезонность и логистика ограничивали потребление.' },
+];
+
+const meals = {
+  breakfast: {
+    ussr: [
+      { icon:'🥣', name:'Каша овсяная или манная' },
+      { icon:'🍳', name:'Яйцо вкрутую или всмятку' },
+      { icon:'🍞', name:'Хлеб с маслом' },
+      { icon:'🫖', name:'Чай или кофе из цикория' },
+    ],
+    usa: [
+      { icon:'🥣', name:'Хлопья с молоком (Corn Flakes, Cheerios)' },
+      { icon:'🍊', name:'Апельсиновый сок' },
+      { icon:'🍞', name:'Тосты с джемом или арахисовым маслом' },
+      { icon:'☕', name:'Кофе' },
+    ],
+    ussrComment: 'Сытный домашний завтрак, требующий времени на приготовление',
+    usaComment: 'Быстро, индустриально — хлопья из коробки за 5 минут',
+    analysis: 'Утро показывает разницу между домашней сытностью и индустриальным удобством. Советская каша — тепло и труд, американские хлопья — стандарт и скорость.',
+  },
+  lunch: {
+    ussr: [
+      { icon:'🍜', name:'Суп (борщ, щи, рассольник)' },
+      { icon:'🍖', name:'Котлета с пюре или макаронами' },
+      { icon:'🍞', name:'Хлеб' },
+      { icon:'🍹', name:'Компот' },
+    ],
+    usa: [
+      { icon:'🥪', name:'Сэндвич PB&J или с тунцом' },
+      { icon:'🥔', name:'Чипсы' },
+      { icon:'🥤', name:'Кола' },
+      { icon:'🍎', name:'Яблоко' },
+    ],
+    ussrComment: 'Горячий обед — обязательная часть дня, чаще в столовой на работе',
+    usaComment: 'Удобный, переносимый формат — можно есть на ходу или за столом',
+    analysis: 'Советский обед строился вокруг горячего блюда — это была социальная норма. Американский обед — быстрый и переносимый: культура «пакетного ланча».',
+  },
+  dinner: {
+    ussr: [
+      { icon:'🥗', name:'Салат (винегрет, Оливье)' },
+      { icon:'🥟', name:'Пельмени или картофель с селёдкой' },
+      { icon:'🍵', name:'Чай с печеньем или вареньем' },
+    ],
+    usa: [
+      { icon:'🍔', name:'Гамбургер или стейк' },
+      { icon:'🍟', name:'Картофель фри' },
+      { icon:'🌽', name:'Кукуруза в початке' },
+      { icon:'🥧', name:'Яблочный пирог (Apple Pie)' },
+    ],
+    ussrComment: 'Вечер — время семейного стола, домашней еды и разговоров',
+    usaComment: 'Семейный ужин с мясом — американская традиция, часто с телевизором',
+    analysis: 'Вечерний стол показывает разные бытовые идеалы: советская домашняя еда и застольность против стандартизированного американского ужина с мясом.',
+  },
+};
+
+const hwCards = {
+  ussr: [
+    { name:'🧺 Очереди', text:'За дефицитными продуктами приходилось стоять в очередях: колбаса, сливочное масло, крупы могли исчезнуть из продажи.' },
+    { name:'🫙 Домашняя консервация', text:'Сезонность продуктов делала важными огород, заготовки и банки на зиму — варенье, соленья, компоты.' },
+    { name:'🔧 Мало техники', text:'Недостаток бытовой техники увеличивал время на готовку и ручной труд. Кухонные комбайны появились лишь в 1970-е.' },
+    { name:'🍲 Культ домашней еды', text:'Несмотря на полуфабрикаты, качество готовых продуктов часто уступало домашней еде, поэтому домашняя кухня оставалась приоритетом.' },
+  ],
+  usa: [
+    { name:'🏪 Супермаркет', text:'Супермаркеты создавали ощущение широкого выбора и потребительской свободы — сотни наименований, яркие упаковки, акции.' },
+    { name:'📺 Реклама', text:'Агрессивный маркетинг «удобных» продуктов формировал спрос на бренды и готовые решения для семьи.' },
+    { name:'📦 TV-dinner', text:'Замороженные обеды от Swanson сокращали время готовки, но усиливали стандартизацию питания и снижали его питательность.' },
+    { name:'📡 Микроволновка', text:'Бытовая техника обещала освободить женщину от кухни, но не всегда меняла распределение домашнего труда.' },
+  ],
+};
+
+const cultureData = [
+  {
+    country:'ussr', icon:'🎬',
+    title:'«Ирония судьбы»',
+    type:'Кино, 1975',
+    desc:'Домашнее застолье, салат, пельмени, чай — символ советского уюта',
+    what:'Домашнее новогоднее застолье, салат «Оливье», пельмени, чай.',
+    why:'Советская кухня показана как пространство близости и коммуникации, а не только питания.',
+    link:'Даже при дефиците домашний стол сохранял символическое значение — место близости, привычки и социальной связи.',
+  },
+  {
+    country:'ussr', icon:'🎥',
+    title:'«Москва слезам не верит»',
+    type:'Кино, 1980',
+    desc:'Еда и застолье как способ общения, знакомства, семейной жизни',
+    what:'Застолья, приготовление еды, домашний быт московской квартиры.',
+    why:'Показывает роль кухни как центра социальной жизни советского человека.',
+    link:'Кухня в советском кино — место принятия важных решений и формирования отношений.',
+  },
+  {
+    country:'ussr', icon:'📚',
+    title:'«Книга о вкусной и здоровой пище»',
+    type:'Кулинарный источник, 1952–1980',
+    desc:'Не просто сборник рецептов, а образ правильного советского питания',
+    what:'Официально одобренные рецепты, нормы питания, образ советского стола.',
+    why:'Государственная идеология питания: экономно, питательно, правильно.',
+    link:'Книга была не нейтральным изданием, а способом формировать культуру питания через государственный нарратив.',
+  },
+  {
+    country:'usa', icon:'🚗',
+    title:'«American Graffiti»',
+    type:'Кино, 1973',
+    desc:'Фастфуд и кафе как ядро молодёжной культуры Америки',
+    what:'Кафе на колёсах, гамбургеры, газировка — молодёжное пространство.',
+    why:'Показывает, как фастфуд стал частью американской идентичности поколения.',
+    link:'В США еда вне дома — норма. Кафе и рестораны быстрого питания были местом социализации.',
+  },
+  {
+    country:'usa', icon:'📺',
+    title:'ТВ-реклама продуктов',
+    type:'Массовая культура, 1960–1980',
+    desc:'Счастливая семья, удобные продукты и бренд как обещание хорошей жизни',
+    what:'Рекламные ролики Kraft, Campbell\'s, Swanson — семья, улыбки, удобство.',
+    why:'Реклама создавала стандарты «правильного» питания через образ счастливой американской семьи.',
+    link:'Потребительская культура превратила питание в инструмент демонстрации социального статуса.',
+  },
+  {
+    country:'usa', icon:'📰',
+    title:'Good Housekeeping',
+    type:'Журнал, 1960–1985',
+    desc:'Журналы учили домохозяек покупать, готовить и организовывать семейный быт',
+    what:'Рецепты, советы по покупкам, тесты продуктов, реклама бытовой техники.',
+    why:'Формировал образ «идеальной домохозяйки» и нормы потребления.',
+    link:'Массовые журналы были важным каналом продовольственной пропаганды — под видом советов по быту.',
+  },
+];
+
+const sources = [
+  {
+    cat:'Статистика',
+    items:[
+      'ЦСУ СССР. Народное хозяйство СССР в 1970, 1980 годах: статистические ежегодники',
+      'USDA. Food Consumption (Per Capita) Data System. Washington, 1982',
+      'FAO. Food Balance Sheets, 1970–1985',
+    ]
+  },
+  {
+    cat:'Кулинарные источники',
+    items:[
+      '«Книга о вкусной и здоровой пище». М.: Пищепромиздат, 1952 (переиздания 1960, 1970, 1980)',
+      'Журнал «Работница» (1960–1985). Архив РГБ',
+      'Журнал «Крестьянка» (1960–1980)',
+      'Good Housekeeping magazine, 1965–1985 editions',
+      'Woman\'s Day magazine, 1960–1980',
+    ]
+  },
+  {
+    cat:'Культура и мемуары',
+    items:[
+      'Фильм «Москва слезам не верит» (1980, реж. В. Меньшов)',
+      'Фильм «Ирония судьбы» (1975, реж. Э. Рязанов)',
+      '«American Graffiti» (1973, dir. G. Lucas)',
+      'Хрущёва Н.С. Воспоминания о Никите Сергеевиче Хрущёве // Вопросы истории, 1990',
+      'Аксёнов В. «Ожог». М.: Известия, 1990',
+      'Terkel S. American Dreams: Lost and Found. New York: Pantheon, 1980',
+    ]
+  },
+  {
+    cat:'Реклама и корпоративные материалы',
+    items:[
+      'Рекламные материалы General Foods, 1965–1975',
+      'Рекламные проспекты Kraft Foods, 1960–1980',
+      'Рекламные кампании Swanson TV Dinners, 1955–1975',
+      'Campbell\'s Soup advertising archive, 1960–1980',
+    ]
+  },
+];
+
+/* ============================
+   INIT PRODUCTS
+   ============================ */
+function initProducts() {
+  const container = document.getElementById('productButtons');
+  products.forEach((p, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'prod-btn' + (i === 0 ? ' active' : '');
+    btn.innerHTML = `${p.icon} ${p.name}`;
+    btn.onclick = () => selectProduct(i);
+    container.appendChild(btn);
+  });
+  selectProduct(0);
+}
+
+let currentProduct = 0;
+function selectProduct(i) {
+  currentProduct = i;
+  const p = products[i];
+  document.querySelectorAll('.prod-btn').forEach((b,j) => {
+    b.classList.toggle('active', j === i);
+  });
+  const maxVal = Math.max(p.ussrN, p.usaN);
+  const maxHeight = 220;
+  const ussrH = Math.round((p.ussrN / maxVal) * maxHeight);
+  const usaH = Math.round((p.usaN / maxVal) * maxHeight);
+
+  document.getElementById('ussrBar').style.height = ussrH + 'px';
+  document.getElementById('usaBar').style.height = usaH + 'px';
+  document.getElementById('ussrVal').textContent = p.ussr;
+  document.getElementById('usaVal').textContent = p.usa;
+  document.getElementById('statIcon').textContent = p.icon;
+  document.getElementById('statName').textContent = p.name;
+  document.getElementById('statUnit').textContent = p.unit;
+  document.getElementById('ussrTooltip').textContent = `СССР: ${p.ussr} ${p.unit}`;
+  document.getElementById('usaTooltip').textContent = `США: ${p.usa} ${p.unit}`;
+  document.getElementById('statComment').textContent = p.comment;
+}
+
+/* ============================
+   INIT MEALS
+   ============================ */
+let currentMeal = 'breakfast';
+function showMeal(meal) {
+  currentMeal = meal;
+  document.querySelectorAll('.meal-btn').forEach((b,i) => {
+    const meals_keys = ['breakfast','lunch','dinner'];
+    b.classList.toggle('active', meals_keys[i] === meal);
+  });
+  const data = meals[meal];
+
+  document.getElementById('ussrDishes').innerHTML = data.ussr.map(d =>
+    `<div class="meal-dish"><span class="dish-icon">${d.icon}</span><span>${d.name}</span></div>`
+  ).join('');
+  document.getElementById('usaDishes').innerHTML = data.usa.map(d =>
+    `<div class="meal-dish"><span class="dish-icon">${d.icon}</span><span>${d.name}</span></div>`
+  ).join('');
+  document.getElementById('ussrMealComment').textContent = data.ussrComment;
+  document.getElementById('usaMealComment').textContent = data.usaComment;
+  document.getElementById('mealAnalysis').textContent = data.analysis;
+}
+
+/* ============================
+   INIT HW CARDS
+   ============================ */
+function initHwCards() {
+  ['ussr','usa'].forEach(side => {
+    const container = document.getElementById(`${side}HwCards`);
+    hwCards[side].forEach((card, i) => {
+      const el = document.createElement('div');
+      el.className = `hw-card ${side}-hw`;
+      el.innerHTML = `
+        <div class="hw-card-header" onclick="toggleHw(this.parentElement)">
+          <div class="hw-card-name">${card.name}</div>
+          <span class="hw-card-arrow">▼</span>
+        </div>
+        <div class="hw-card-body">
+          <div class="hw-card-text">${card.text}</div>
+        </div>`;
+      container.appendChild(el);
+    });
+  });
+}
+
+function toggleHw(card) {
+  card.classList.toggle('open');
+}
+
+/* ============================
+   IDEOLOGY SLIDER
+   ============================ */
+function updateIdeology(val) {
+  val = parseInt(val);
+  const ussrPanel = document.getElementById('ussrPanel');
+  const usaPanel = document.getElementById('usaPanel');
+  const exp = document.getElementById('ideologyExplanation');
+  const label = document.getElementById('sliderCenterLabel');
+
+  ussrPanel.style.opacity = val < 50 ? 1 : (1 - (val-50)/80);
+  usaPanel.style.opacity = val > 50 ? 1 : (1 - (50-val)/80);
+
+  if (val <= 33) {
+    exp.className = 'ideology-explanation ussr-exp';
+    exp.textContent = 'Советская система представляла питание как часть социальной заботы государства. Фиксированные цены на хлеб и молоко подчёркивали превосходство социализма. Но эта гарантия сочеталась с дефицитом и ограниченным выбором.';
+    label.textContent = '← Позиция СССР: питание как социальная гарантия государства';
+  } else if (val >= 67) {
+    exp.className = 'ideology-explanation usa-exp';
+    exp.textContent = 'Американская система связывала питание с выбором и изобилием. Широкий ассортимент супермаркетов и реклама создавали образ свободного общества. Но за этим стояли рынок, зависимость качества питания от дохода и "пищевые пустыни" в бедных районах.';
+    label.textContent = 'Позиция США: питание как потребительская свобода →';
+  } else {
+    exp.className = 'ideology-explanation balance-exp';
+    exp.textContent = 'Обе стороны использовали питание как аргумент в споре о преимуществах своей системы: США показывали советский дефицит, СССР критиковал бедность и неравенство капиталистического общества. Еда стала языком Холодной войны.';
+    label.textContent = 'Сравнение: еда стала языком Холодной войны';
+  }
+}
+
+/* ============================
+   COMPARE TOGGLE
+   ============================ */
+function showCompare(mode) {
+  document.getElementById('diffBtn').classList.toggle('active', mode==='diff');
+  document.getElementById('simBtn').classList.toggle('active', mode==='sim');
+
+  const h = document.querySelector('.compare-result h3');
+  const pts = document.getElementById('comparePoints');
+
+  if (mode === 'diff') {
+    h.textContent = 'КЛЮЧЕВЫЕ РАЗЛИЧИЯ';
+    pts.innerHTML = `
+      <div class="compare-point ussr-p">🏛️ СССР — государственное регулирование цен и распределения продуктов</div>
+      <div class="compare-point usa-p">🏪 США — рыночная экономика и корпоративные продовольственные системы</div>
+      <div class="compare-point ussr-p">📋 СССР — дефицит и очереди, особенно на колбасу и масло</div>
+      <div class="compare-point usa-p">📢 США — реклама и избыток выбора, но неравный доступ по доходу</div>`;
+  } else {
+    h.textContent = 'ОБЩЕЕ В ОБЕИХ СИСТЕМАХ';
+    pts.innerHTML = `
+      <div class="compare-point shared">👩‍🍳 В обеих странах домашний труд оставался преимущественно женским делом</div>
+      <div class="compare-point shared">📦 В обеих странах постепенно распространялись полуфабрикаты — пельмени в СССР, TV-dinner в США</div>
+      <div class="compare-point shared">📣 В обеих странах еда активно использовалась в пропаганде и идеологическом соревновании</div>`;
+  }
+}
+
+/* ============================
+   CULTURE CARDS
+   ============================ */
+function initCultureCards() {
+  renderCultureCards('all');
+}
+
+function renderCultureCards(filter) {
+  const container = document.getElementById('cultureCards');
+  const filtered = filter === 'all' ? cultureData : cultureData.filter(c => c.country === filter);
+  container.innerHTML = filtered.map((c,i) => `
+    <div class="culture-card ${c.country}-c" onclick='openModal(${i}, "${filter}")'>
+      <div class="culture-card-inner">
+        <span class="culture-card-badge">${c.country === 'ussr' ? 'СССР' : 'США'}</span>
+        <div class="culture-card-icon">${c.icon}</div>
+        <div class="culture-card-title">${c.title}</div>
+        <div class="culture-card-desc">${c.type} — ${c.desc}</div>
+        <div class="culture-card-cta">Подробнее →</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCulture(f, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCultureCards(f);
+}
+
+let _currentFilter = 'all';
+function openModal(localIdx, filter) {
+  const filtered = filter === 'all' ? cultureData : cultureData.filter(c => c.country === filter);
+  const c = filtered[localIdx];
+  document.getElementById('modalBadge').textContent = (c.country === 'ussr' ? 'СССР' : 'США') + ' · ' + c.type;
+  document.getElementById('modalTitle').textContent = c.title;
+  document.getElementById('modalWhat').textContent = c.what;
+  document.getElementById('modalWhy').textContent = c.why;
+  document.getElementById('modalLink').textContent = c.link;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+}
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ============================
+   SOURCES ACCORDION
+   ============================ */
+function initSources() {
+  const container = document.getElementById('sourcesAccordion');
+  sources.forEach((s, i) => {
+    const el = document.createElement('div');
+    el.className = 'source-group';
+    el.innerHTML = `
+      <div class="source-group-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>${s.cat.toUpperCase()}</span>
+        <span>▼</span>
+      </div>
+      <div class="source-group-body">
+        <div class="source-list">
+          ${s.items.map(item => `<div class="source-item">${item}</div>`).join('')}
+        </div>
+      </div>`;
+    container.appendChild(el);
+  });
+}
+
+/* ============================
+   SCROLL ANIMATIONS
+   ============================ */
+function initReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+/* ============================
+   PROGRESS NAV
+   ============================ */
+function initProgress() {
+  const sections = ['hero','systems','stats','daily','housewife','ideology','culture','conclusion'];
+  const links = document.querySelectorAll('.progress-nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.progress-nav a[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+}
+
+/* ============================
+   BOOT
+   ============================ */
+document.addEventListener('DOMContentLoaded', () => {
+  initProducts();
+  showMeal('breakfast');
+  initHwCards();
+  initCultureCards();
+  initSources();
+  initReveal();
+  initProgress();
+  updateIdeology(50);
+});
+</script>
+
+</body>
+</html>
