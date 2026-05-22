@@ -1388,14 +1388,14 @@ transform: none;
 <!-- PROGRESS NAV -->
 
 <nav class="progress-nav" id="progressNav">
-  <a href="#hero" class="active"><span class="dot"></span><span class="label">01 Обложка</span></a>
-  <a href="#systems"><span class="dot"></span><span class="label">02 Системы</span></a>
-  <a href="#stats"><span class="dot"></span><span class="label">03 Статистика</span></a>
-  <a href="#daily"><span class="dot"></span><span class="label">04 День</span></a>
-  <a href="#housewife"><span class="dot"></span><span class="label">05 Быт</span></a>
-  <a href="#ideology"><span class="dot"></span><span class="label">06 Идеология</span></a>
-  <a href="#culture"><span class="dot"></span><span class="label">07 Культура</span></a>
-  <a href="#conclusion"><span class="dot"></span><span class="label">08 Вывод</span></a>
+  <a href="#hero" class="active"><span class="dot"></span><span class="label">1 Обложка</span></a>
+  <a href="#systems"><span class="dot"></span><span class="label">2 Системы</span></a>
+  <a href="#stats"><span class="dot"></span><span class="label">3 Статистика</span></a>
+  <a href="#daily"><span class="dot"></span><span class="label">4 День</span></a>
+  <a href="#housewife"><span class="dot"></span><span class="label">5 Быт</span></a>
+  <a href="#ideology"><span class="dot"></span><span class="label">6 Идеология</span></a>
+  <a href="#culture"><span class="dot"></span><span class="label">7 Культура</span></a>
+  <a href="#conclusion"><span class="dot"></span><span class="label">8 Вывод</span></a>
 </nav>
 
 <!-- MODAL -->
@@ -1479,7 +1479,6 @@ transform: none;
 
 <section id="systems">
   <div class="container" style="padding-top:100px;padding-bottom:100px;">
-    <span class="section-label reveal">02 — СИСТЕМЫ ПИТАНИЯ</span>
     <h2 class="section-title reveal">Две кухни —<br>две системы</h2>
     <p class="section-sub reveal">Рацион человека зависел не только от вкуса, но и от устройства государства, рынка и быта.</p>
 
@@ -1543,7 +1542,6 @@ transform: none;
 
 <section id="stats">
   <div class="container">
-    <span class="section-label reveal">03 — СТАТИСТИКА</span>
     <h2 class="section-title reveal">Что ели чаще?</h2>
     <p class="section-sub reveal">Среднедушевое потребление продуктов в год, 1970-е гг. Нажмите на продукт для сравнения.</p>
 
@@ -1588,7 +1586,6 @@ transform: none;
 
 <section id="daily">
   <div class="container">
-    <span class="section-label reveal">04 — ТИПИЧНЫЙ ДЕНЬ</span>
     <h2 class="section-title reveal">Один день<br>на кухне</h2>
     <p class="section-sub reveal">Как выглядел обычный рабочий день через завтрак, обед и ужин?</p>
 
@@ -1622,18 +1619,17 @@ transform: none;
 
 <section id="housewife">
   <div class="container">
-    <span class="section-label reveal">05 — БЫТ И ДОМОХОЗЯЙКИ</span>
     <h2 class="section-title reveal">Главная нагрузка<br>кухни</h2>
     <p class="section-sub reveal">В обеих системах питание было связано с женским домашним трудом, но проблемы были разными.</p>
 
 <div class="hw-grid">
   <div class="reveal">
-    <div class="hw-side-title ussr-t">🇷🇺 СССР: «Достать и приготовить»</div>
+    <div class="hw-side-title ussr-t"> СССР: «Достать и приготовить»</div>
     <div class="hw-subtitle">Главная проблема — дефицит и трудоёмкость</div>
     <div class="hw-cards" id="ussrHwCards"></div>
   </div>
   <div class="reveal reveal-delay-1">
-    <div class="hw-side-title usa-t">🇺🇸 США: «Выбрать и купить»</div>
+    <div class="hw-side-title usa-t"> США: «Выбрать и купить»</div>
     <div class="hw-subtitle">Главная проблема — избыток выбора и реклама</div>
     <div class="hw-cards" id="usaHwCards"></div>
   </div>
@@ -1653,7 +1649,6 @@ transform: none;
 
 <section id="ideology">
   <div class="container">
-    <span class="section-label reveal">06 — ИДЕОЛОГИЯ</span>
     <h2 class="section-title reveal">Еда как идеология</h2>
     <p class="section-sub reveal">Питание было не только бытовой практикой, но и способом рассказать о преимуществах системы.</p>
 
@@ -1703,7 +1698,6 @@ transform: none;
 
 <section id="culture">
   <div class="container">
-    <span class="section-label reveal">07 — МАССОВАЯ КУЛЬТУРА</span>
     <h2 class="section-title reveal">Кухня в кино,<br>рекламе и памяти</h2>
     <p class="section-sub reveal">Еда попадала не только на стол, но и в массовую культуру.</p>
 
@@ -1724,7 +1718,6 @@ transform: none;
 
 <section id="conclusion">
   <div class="container">
-    <span class="conclusion-label">08 — ГЛАВНЫЙ ВЫВОД</span>
     <h2 class="conclusion-title">Что показывает<br>кухонный стол?</h2>
 
 <div class="conclusion-cards">
@@ -1831,7 +1824,7 @@ const meals = {
 const hwCards = {
   ussr: [
     { name:'🧺 Очереди', text:'За дефицитными продуктами приходилось стоять в очередях: колбаса, сливочное масло, крупы могли исчезнуть из продажи.' },
-    { name:'🥫 Домашняя консервация', text:'Сезонность продуктов делала важными огород, заготовки и банки на зиму — варенье, соленья, компоты.' },
+    { name:'🥫 Домашняя консервация', text:'Сезонность продуктов делала важными заготовки на зиму — варенье, соленья, компоты.' },
     { name:'🔧 Мало техники', text:'Недостаток бытовой техники увеличивал время на готовку и ручной труд. Кухонные комбайны появились лишь в 1970-е.' },
     { name:'🍲 Культ домашней еды', text:'Несмотря на полуфабрикаты, качество готовых продуктов часто уступало домашней еде, поэтому домашняя кухня оставалась приоритетом.' },
   ],
