@@ -851,9 +851,12 @@ line-height: 1.7;
 }
 
 .hw-conclusion {
-background: var(--text);
-color: var(--bg-light);
-padding: 34px 44px;
+    background: linear-gradient(135deg, #2F2620, #3A2F28);
+    color: #F5E9D8;
+    padding: 34px 44px;
+    border: 1px solid #5A4638;
+    border-radius: 18px;
+    box-shadow: 0 10px 28px rgba(26, 20, 16, 0.18);
 }
 
 .hw-conclusion strong {
@@ -1427,7 +1430,7 @@ transform: none;
 <section id="hero">
   <div class="hero-inner container" style="max-width:100%;padding:0;">
     <div class="hero-side ussr" onmouseenter="" onmouseleave="">
-      <div class="hero-side-label">СССР · 1960–1980</div>
+      <div class="hero-side-label">СССР</div>
       <div class="hero-items">
         <div class="hero-item"><span class="icon">🍞</span> Чёрный хлеб</div>
         <div class="hero-item"><span class="icon">🥔</span> Картофель</div>
@@ -1457,7 +1460,7 @@ transform: none;
       </button>
     </div>
     <div class="hero-side usa">
-      <div class="hero-side-label">США · 1960–1980</div>
+      <div class="hero-side-label">США</div>
       <div class="hero-items">
         <div class="hero-item"><span class="icon">🥣</span> Хлопья с молоком</div>
         <div class="hero-item"><span class="icon">🍔</span> Гамбургер</div>
@@ -1484,7 +1487,6 @@ transform: none;
 
 <div class="systems-grid reveal">
   <div class="system-card ussr">
-    <div class="system-card-tag">СССР</div>
     <div class="system-card-title">СССР</div>
     <div class="system-card-subtitle">Гарантия, но дефицит</div>
     <div class="system-icons">🍞 🥔 🥫 👜 📖</div>
@@ -1500,7 +1502,6 @@ transform: none;
     </div>
   </div>
   <div class="system-card usa">
-    <div class="system-card-tag">США</div>
     <div class="system-card-title">США</div>
     <div class="system-card-subtitle">Выбор, рынок и реклама</div>
     <div class="system-icons">🛒 📺 🍔 📣 🏪</div>
@@ -1764,7 +1765,7 @@ const products = [
   { name:'Молоко', icon:'🥛', ussr:'300–320', usa:'250–260', ussrN:310, usaN:255, unit:'кг/год', comment:'По молочным продуктам разрыв был значительно меньше. СССР производил большое количество кефира, сметаны и творога.' },
   { name:'Яйца', icon:'🥚', ussr:'220–240', usa:'300–320', ussrN:230, usaN:310, unit:'шт./год', comment:'В США потребление яиц было выше, в том числе благодаря популярности яиц на завтрак и широкому использованию в выпечке.' },
   { name:'Сахар', icon:'🍬', ussr:'40–45', usa:'55–65', ussrN:42, usaN:60, unit:'кг/год', comment:'Американцы потребляли заметно больше сладкого — сказывалось широкое распространение газировки, кондитерских изделий и сладких хлопьев.' },
-  { name:'Картофель', icon:'🥔', ussr:'120–130', usa:'50–60', ussrN:125, usaN:55, unit:'кг/год', comment:'Картофель был важнейшей частью советского рациона — дешёвый, питательный, доступный круглый год. В США он уступал место другим гарнирам.' },
+  { name:'Картофель', icon:'🥔', ussr:'120–130', usa:'50–60', ussrN:125, usaN:55, unit:'кг/год', comment:'Картофель был важнейшей частью советского рациона — дешёвый, питательный, доступный круглый год, не зря его называли "вторым хлебом". В США он уступал место другим гарнирам.' },
   { name:'Фрукты', icon:'🍎', ussr:'35–40', usa:'65–75', ussrN:38, usaN:70, unit:'кг/год', comment:'В США фрукты были доступнее круглый год благодаря развитой торговле. В СССР сезонность и логистика ограничивали потребление.' },
 ];
 
